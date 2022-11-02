@@ -58,6 +58,10 @@ export const Register = () => {
           handleChange={ChangeEvent}
         />
 
+        <button className="btn btn-block">
+          Submit
+        </button>
+
         {/* right after submit btn */}
         {/* toggle button */}
 

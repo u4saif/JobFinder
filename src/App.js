@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Error } from "./Pages/Error";
-import { Landing } from "./Pages/Landing";
-import { Register } from './Pages/Register';
+import { Error } from "./pages/Error";
+import { Landing } from "./pages/Landing";
+import { Register } from './pages/Register';
 
 function App() {
   return (
