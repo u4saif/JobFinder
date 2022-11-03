@@ -14,12 +14,11 @@ export const Register = () => {
     isMember: true,
   };
   const dispatch = useDispatch();
-  const { isLoading, user } = useSelector((store) => store.user);
+  const { isLoading } = useSelector((store) => store.user);
   const [values, setValues] = useState(initialState);
 
   const handleSubmit=(e)=>{
     e.preventDefault();
-    console.log(values);
     if(!values.email || !values.password || (!values.isMember && !values.name)){
       toast.error("Please fill all the fields.");
       return;
@@ -86,7 +85,7 @@ export const Register = () => {
             {values.isMember ? "Register" : "Login"}
           </button>
 
-          {user && user.name}
+          {/* {user && user.name} */}
         </p>
       </form>
     </Wrapper>

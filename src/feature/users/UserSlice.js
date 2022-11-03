@@ -1,10 +1,11 @@
 import { createSlice,createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { creatFeatch } from '../../utils/axios';
+import { getLocalUser, saveLocalUser } from '../../utils/localStorage';
 
 const initialState = {
   isLoading: false,
-  user: null,
+  user: getLocalUser(),
 };
 
 export const loginUser = createAsyncThunk(
@@ -44,6 +45,7 @@ const userSlice = createSlice({
       const { user } = payload;
       state.user = user;
       toast.success(`Hello!! ${user.name}`);
+      saveLocalUser(user);
       console.log(payload);
 
     },
@@ -57,7 +59,8 @@ const userSlice = createSlice({
     [newUser.fulfilled]:(state,{payload})=>{
       const { user } = payload;
       state.user = user;
-      state.isLoading=false
+      state.isLoading=false;
+      saveLocalUser(user);
       toast.success(`Welcome!! ${user.name}`);
       console.log(payload);
     },
