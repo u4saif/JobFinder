@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Wrapper from "../assets/wrappers/RegisterPage";
 import { FormInput } from "../components/FormInput";
@@ -14,8 +15,17 @@ export const Register = () => {
     isMember: true,
   };
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((store) => store.user);
+  const navigate = useNavigate();
+  const { isLoading,user } = useSelector((store) => store.user);
   const [values, setValues] = useState(initialState);
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate('/');
+      }, 1500);
+    }
+  }, [user, navigate]);
 
   const handleSubmit=(e)=>{
     e.preventDefault();
