@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Wrapper from "../assets/wrappers/RegisterPage";
 import { FormInput } from "../components/FormInput";
 import Logo from "../components/Logo";
+import { loginUser } from "../feature/users/UserSlice";
 
 export const Register = () => {
   const initialState = {
@@ -10,7 +12,8 @@ export const Register = () => {
     password: "",
     isMember: true,
   };
-
+  const dispatch = useDispatch();
+  const { isLoading, user } = useSelector((store) => store.user);
   const [values, setValues] = useState(initialState);
 
   const ChangeEvent = (e) => {
@@ -23,6 +26,7 @@ export const Register = () => {
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
     console.log(values);
+    dispatch(loginUser({ values }));
   };
   return (
     <Wrapper className="full-page">
