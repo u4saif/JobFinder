@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Wrapper from '../../assets/wrappers/SharedLayout'
-import Logo from '../../components/Logo'
+import { Navbar } from '../../components/Navbar'
 
 export const SharedLayout = () => {
   return (
@@ -12,7 +12,7 @@ export const SharedLayout = () => {
           {/* <SmallSidebar />
           <BigSidebar /> */}
           <div>
-            <Logo />
+            <Navbar />
             <div className='dashboard-page'>
               <Outlet />
             </div>
