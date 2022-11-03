@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import Wrapper from "../assets/wrappers/RegisterPage";
 import { FormInput } from "../components/FormInput";
 import Logo from "../components/Logo";
-import { loginUser } from "../feature/users/UserSlice";
+import { loginUser, newUser } from "../feature/users/UserSlice";
 
 export const Register = () => {
   const initialState = {
@@ -16,6 +17,17 @@ export const Register = () => {
   const { isLoading, user } = useSelector((store) => store.user);
   const [values, setValues] = useState(initialState);
 
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    console.log(values);
+    if(!values.email || !values.password || (!values.isMember && !values.name)){
+      toast.error("Please fill all the fields.");
+      return;
+    }
+    const {email,password,name} = values;
+    (values.isMember) ? dispatch(loginUser({email,password})) :  dispatch(newUser({email,password,name}));
+  };
+
   const ChangeEvent = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -26,11 +38,10 @@ export const Register = () => {
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
     console.log(values);
-    dispatch(loginUser({ values }));
   };
   return (
     <Wrapper className="full-page">
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
         <Logo />
         <h3>{values.isMember ? "Login" : "Register"}</h3>
         {/* name input */}
@@ -62,8 +73,8 @@ export const Register = () => {
           handleChange={ChangeEvent}
         />
 
-        <button className="btn btn-block">
-          Submit
+        <button type="submit" className="btn btn-block" disabled={isLoading}>
+          {!isLoading ? "Submit" : "Wait..."}
         </button>
 
         {/* right after submit btn */}
@@ -74,6 +85,8 @@ export const Register = () => {
           <button type="button" onClick={toggleMember} className="member-btn">
             {values.isMember ? "Register" : "Login"}
           </button>
+
+          {user && user.name}
         </p>
       </form>
     </Wrapper>
