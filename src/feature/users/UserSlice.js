@@ -85,6 +85,7 @@ const userSlice = createSlice({
     },
     [logoutUser.fulfilled]:(state,{payload})=>{
       state.isLoading=false;
+      state.user=null;
       toast.success(payload);
     }
 
