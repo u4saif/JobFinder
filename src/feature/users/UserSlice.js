@@ -1,7 +1,7 @@
 import { createSlice,createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { creatFeatch } from '../../utils/axios';
-import { getLocalUser, saveLocalUser } from '../../utils/localStorage';
+import { getLocalUser, removeLocalUser, saveLocalUser } from '../../utils/localStorage';
 
 const initialState = {
   isLoading: false,
@@ -29,6 +29,18 @@ export const newUser = createAsyncThunk(
       return resp.data;
     } catch(error){
       return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
+export const logoutUser = createAsyncThunk(
+  'user/logoutUser',
+  async (user, thunkAPI) => {
+    try {
+      removeLocalUser();
+      return `Logout Successfully`;
+    } catch (error) {
+
     }
   }
 );
@@ -68,6 +80,14 @@ const userSlice = createSlice({
       state.isLoading=false
       toast.error(payload);
     },
+    [logoutUser.pending]:(state)=>{
+      state.isLoading=true;
+    },
+    [logoutUser.fulfilled]:(state,{payload})=>{
+      state.isLoading=false;
+      toast.success(payload);
+    }
+
 
   }
 
