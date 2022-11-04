@@ -10,7 +10,6 @@ export const SharedLayout = () => {
     <>
       <Wrapper>
         <main className='dashboard'>
-            Sharedlayout
           <SmallSidebar />
           <BigSidebar />
           <div>

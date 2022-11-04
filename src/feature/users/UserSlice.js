@@ -5,6 +5,7 @@ import { getLocalUser, removeLocalUser, saveLocalUser } from '../../utils/localS
 
 const initialState = {
   isLoading: false,
+  isSidebarOpen:false,
   user: getLocalUser(),
 };
 
@@ -48,6 +49,11 @@ export const logoutUser = createAsyncThunk(
 const userSlice = createSlice({
   name: 'user',
   initialState,
+  reducers:{
+    toggleSidebar:(state)=>{
+      state.isSidebarOpen=!state.isSidebarOpen;
+    }
+  },
   extraReducers:{
     [loginUser.pending]:(state)=>{
       state.isLoading=true
@@ -94,5 +100,5 @@ const userSlice = createSlice({
 
 });
 
-
+export const {toggleSidebar} =userSlice.actions;
 export default userSlice.reducer;

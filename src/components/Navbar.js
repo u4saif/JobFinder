@@ -3,7 +3,7 @@ import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa';
 import Logo from './Logo';
 import { useDispatch, useSelector } from 'react-redux';
 import Wrapper from '../assets/wrappers/Navbar';
-import { logoutUser } from '../feature/users/UserSlice';
+import { logoutUser, toggleSidebar } from '../feature/users/UserSlice';
 import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
@@ -14,7 +14,11 @@ export const Navbar = () => {
   return (
     <Wrapper>
     <div className='nav-center'>
-      <button type='button' className='toggle-btn' onClick={()=> console.log('toggle sidebar')}>
+      <button type='button' className='toggle-btn' onClick={()=> {
+        console.log('toggle sidebar');
+        dispatch(toggleSidebar());
+      }
+      }>
         <FaAlignLeft />
       </button>
       <div>
