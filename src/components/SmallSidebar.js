@@ -29,6 +29,7 @@ export const SmallSidebar = () => {
                 className={({ isActive }) =>
                   isActive ? 'nav-link active' : 'nav-link'
                 }
+                onClick={() => dispatch(toggleSidebar())}
               >
                 <span className='icon'>{icon}</span>
                 {text}
