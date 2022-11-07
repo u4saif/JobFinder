@@ -1,7 +1,8 @@
-// import NavLinks from './NavLinks';
 import Logo from '../components/Logo';
 import Wrapper from '../assets/wrappers/BigSidebar';
 import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import links from '../utils/navlinks';
 
 export const BigSidebar = () => {
   const { isSidebarOpen } = useSelector((store) => store.user);
@@ -17,7 +18,21 @@ export const BigSidebar = () => {
         <header>
           <Logo />
         </header>
-        {/* <NavLinks /> */}
+        <div className='nav-links'>
+            {links.map((link) => {
+              const { path, id, icon, text } = link;
+              return <NavLink
+                to={path}
+                key={id}
+                className={({ isActive }) =>
+                  isActive ? 'nav-link active' : 'nav-link'
+                }
+              >
+                <span className='icon'>{icon}</span>
+                {text}
+              </NavLink>
+            })}
+          </div>
       </div>
     </div>
   </Wrapper>
