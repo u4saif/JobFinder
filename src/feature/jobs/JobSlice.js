@@ -1,7 +1,7 @@
 import { createSlice,createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { creatFeatch } from '../../utils/axios';
-import { } from '../../utils/localStorage';
+import { getLocalUser } from '../../utils/localStorage';
 
 const initialState = {
     isLoading: false,
@@ -20,8 +20,14 @@ const jobSlice=createSlice({
     name:"job",
     initialState,
     reducers:{
-
+        handleChange:(state, { payload: { name, value } })=>{
+            state[name]=value;
+        },
+        clearAllValue:()=>{
+            return {...initialState,jobLocation: getLocalUser()?.location || ''}
+        }
     }
 });
 
+export const { handleChange, clearAllValue } = jobSlice.actions;
 export default jobSlice.reducer;
