@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import {FormInput} from '../../components/FormInput';
 import { FormSelect } from '../../components/FormSelect';
-import { handleChange,clearAllValue } from '../../feature/jobs/JobSlice';
+import { handleChange,clearAllValue, creatJobThunk } from '../../feature/jobs/JobSlice';
 
 export const AddJob = () => {
   const  {
@@ -26,6 +26,7 @@ export const AddJob = () => {
       toast.error('Please Fill Out All Fields');
       return;
     }
+    dispatch(creatJobThunk({status,position,company,jobLocation,jobType}));
     console.warn({status,position,company,jobLocation,jobType});
   };
 
