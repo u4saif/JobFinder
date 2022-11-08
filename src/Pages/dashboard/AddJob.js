@@ -26,7 +26,7 @@ export const AddJob = () => {
       toast.error('Please Fill Out All Fields');
       return;
     }
-    console.warn({status,position,company,jobLocation});
+    console.warn({status,position,company,jobLocation,jobType});
   };
 
   const handleJobInput = (e) => {
@@ -77,6 +77,13 @@ export const AddJob = () => {
           />
 
           {/* job type */}
+          <FormSelect
+          name="jobType"
+          labelText="Job Type"
+          stelectOptions={jobTypeOptions}
+          value={jobType}
+          handleChange={handleJobInput}
+          />
 
           {/* btn container */}
           <div className='btn-container'>
