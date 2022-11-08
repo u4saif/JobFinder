@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import {FormInput} from '../../components/FormInput';
+import { FormSelect } from '../../components/FormSelect';
 import { handleChange,clearAllValue } from '../../feature/jobs/JobSlice';
 
 export const AddJob = () => {
@@ -25,6 +26,7 @@ export const AddJob = () => {
       toast.error('Please Fill Out All Fields');
       return;
     }
+    console.warn({status,position,company,jobLocation});
   };
 
   const handleJobInput = (e) => {
@@ -33,7 +35,8 @@ export const AddJob = () => {
     dispatch(handleChange({name,value}))
   };
 
-  const ChangeEvent=()=>{
+  
+  const ChangeEvent=(e)=>{
 
   };
 
@@ -65,6 +68,13 @@ export const AddJob = () => {
             handleChange={handleJobInput}
           />
           {/* job status */}
+          <FormSelect
+          name="status"
+          labelText="Job Status"
+          stelectOptions={statusOptions}
+          value={status}
+          handleChange={handleJobInput}
+          />
 
           {/* job type */}
 
