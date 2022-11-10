@@ -26,6 +26,10 @@ const Wrapper = styled.section`
     align-self: end;
     margin-top: 1rem;
   }
+  .btn-danger { 
+      background: var(--red-light);
+      color: var(--red-dark);
+  }
   @media (min-width: 768px) {
     .form-center {
       grid-template-columns: 1fr 1fr;

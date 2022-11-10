@@ -5,7 +5,7 @@ import { getLocalUser, removeLocalUser, saveLocalUser } from '../../utils/localS
 
 const initialState = {
   isLoading: false,
-  isSidebarOpen:false,
+  isSidebarOpen:true,
   user: getLocalUser(),
 };
 
