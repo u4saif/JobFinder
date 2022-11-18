@@ -1,4 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
+import { creatFeatch } from '../../utils/axios';
 
 const initialFiltersState = {
   search: '',
@@ -21,6 +23,21 @@ const initialState = {
   ...initialFiltersState,
 };
 
+export const getAllJobs = createAsyncThunk('AllJobSlice/getAlljobs',
+  async (_, thunkAPI) => {
+    try {
+      const response = await creatFeatch.get('/jobs',
+        {
+          headers: {
+            authorization: `Bearer ${thunkAPI.getState().user.user.token}`,
+          }
+        });
+        return response.data;
+    } catch (error) {
+      thunkAPI.rejectWithValue("Internal Server Error");
+    }
+  });
+
 const AllJobSlice = createSlice({
   name: 'allJob',
   initialState,
@@ -33,7 +50,22 @@ const AllJobSlice = createSlice({
         ...initialState
       }
     },
+  },
+  extraReducers:{
+    [getAllJobs.pending]:(state)=>{
+      state.isLoading = true;
+    },
+    [getAllJobs.fulfilled]:(state,{payload})=>{
+      state.isLoading = false;
+      state.jobs = payload.jobs;
+    },
+    [getAllJobs.rejected]:(state, { payload })=>{
+      state.isLoading = false;
+      toast.error(payload);
+    }
   }
 });
-export const { handleChange ,clearAllValue} = AllJobSlice.actions;
+
+
+export const { handleChange, clearAllValue } = AllJobSlice.actions;
 export default AllJobSlice.reducer;
