@@ -3,6 +3,8 @@ import Wrapper from '../assets/wrappers/Job';
 import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from 'react-icons/fa';
 import JobInfo from './JobInfo';
 import moment from 'moment';
+import { setEditJob,deleteJob } from '../feature/jobs/JobSlice';
+import { useDispatch } from "react-redux";
 
 const Job = ({
   _id,
@@ -14,6 +16,7 @@ const Job = ({
   status,
 }) => {
   const date = moment(createdAt).format('MMM Do, YYYY');
+  const dispatch=useDispatch();
   return (
     <Wrapper>
       <header>
@@ -36,7 +39,16 @@ const Job = ({
               to='/addjob'
               className='btn edit-btn'
               onClick={() => {
-                console.log('edit job');
+                dispatch(
+                  setEditJob({
+                    editJobId: _id,
+                    position,
+                    company,
+                    jobLocation,
+                    jobType,
+                    status,
+                  })
+                );
               }}
             >
               Edit
@@ -45,7 +57,7 @@ const Job = ({
               type='button'
               className='btn delete-btn'
               onClick={() => {
-                console.log('delete  job');
+                dispatch(deleteJob(_id));
               }}
             >
               Delete

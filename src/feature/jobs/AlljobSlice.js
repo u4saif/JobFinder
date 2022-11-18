@@ -32,7 +32,7 @@ export const getAllJobs = createAsyncThunk('AllJobSlice/getAlljobs',
             authorization: `Bearer ${thunkAPI.getState().user.user.token}`,
           }
         });
-        return response.data;
+      return response.data;
     } catch (error) {
       thunkAPI.rejectWithValue("Internal Server Error");
     }
@@ -45,21 +45,27 @@ const AllJobSlice = createSlice({
     handleChange: (state, { payload: { name, value } }) => {
       state[name] = value;
     },
+    showLoading: (state) => {
+      state.isLoading = true;
+    },
+    hideLoading: (state) => {
+      state.isLoading = false;
+    },
     clearAllValue: () => {
       return {
         ...initialState
       }
     },
   },
-  extraReducers:{
-    [getAllJobs.pending]:(state)=>{
+  extraReducers: {
+    [getAllJobs.pending]: (state) => {
       state.isLoading = true;
     },
-    [getAllJobs.fulfilled]:(state,{payload})=>{
+    [getAllJobs.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
       state.jobs = payload.jobs;
     },
-    [getAllJobs.rejected]:(state, { payload })=>{
+    [getAllJobs.rejected]: (state, { payload }) => {
       state.isLoading = false;
       toast.error(payload);
     }
@@ -67,5 +73,5 @@ const AllJobSlice = createSlice({
 });
 
 
-export const { handleChange, clearAllValue } = AllJobSlice.actions;
+export const { handleChange, clearAllValue, showLoading, hideLoading } = AllJobSlice.actions;
 export default AllJobSlice.reducer;
