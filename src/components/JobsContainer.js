@@ -4,6 +4,7 @@ import Wrapper from '../assets/wrappers/JobsContainer';
 import { getAllJobs } from '../feature/jobs/AlljobSlice';
 import Job from './Job';
 import Loading from "../components/Loading";
+import { Paginator } from './Paginator';
 
 export const JobsContainer = () => {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ export const JobsContainer = () => {
           return <Job key={job._id} {...job} />;
         })}
       </div>
+      <Paginator/>
     </Wrapper>
   );
 }
