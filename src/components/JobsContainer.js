@@ -2,21 +2,22 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Wrapper from '../assets/wrappers/JobsContainer';
 import { getAllJobs } from '../feature/jobs/AlljobSlice';
-import  Job  from './Job';
+import Job from './Job';
 import Loading from "../components/Loading";
 
 export const JobsContainer = () => {
   const dispatch = useDispatch();
-  const { jobs , isLoading,page,search,sort,searchStatus, searchType} = useSelector((store) => store.allJob);
+  const { jobs, isLoading, page, search, sort, searchStatus, searchType } = useSelector((store) => store.allJob);
 
   useEffect(() => {
+    if (isLoading) return;
     dispatch(getAllJobs());
-  }, [search,page,sort,searchStatus,searchType]);
+  }, [search, page, sort, searchStatus, searchType]);
 
   if (isLoading) {
     return (
       <Wrapper>
-        <Loading center={true}/>
+        <Loading center={true} />
       </Wrapper>
     );
   }
@@ -32,7 +33,7 @@ export const JobsContainer = () => {
       <h5>jobs info</h5>
       <div className='jobs'>
         {jobs.map((job) => {
-          return <Job key={job._id} {...job}/>;
+          return <Job key={job._id} {...job} />;
         })}
       </div>
     </Wrapper>
