@@ -4,7 +4,7 @@ import { creatFeatch } from '../../utils/axios';
 
 const initialFiltersState = {
   search: '',
-  searchStatus: 'interview',
+  searchStatus: 'all',
   searchType: 'all',
   searchStatusOptions: ['all', 'interview', 'declined', 'pending'],
   searchTypeOptions: ['all', 'full-time', 'part-time', 'remote', 'internship'],
@@ -25,8 +25,13 @@ const initialState = {
 
 export const getAllJobs = createAsyncThunk('AllJobSlice/getAlljobs',
   async (_, thunkAPI) => {
+    const {page,search,searchStatus,searchType,sort}=thunkAPI.getState().allJob;
+    let url=`/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}`;
+    if(search){
+      url=url + `&search=${search}`;
+    }
     try {
-      const response = await creatFeatch.get('/jobs',
+      const response = await creatFeatch.get(url,
         {
           headers: {
             authorization: `Bearer ${thunkAPI.getState().user.user.token}`,
@@ -34,7 +39,7 @@ export const getAllJobs = createAsyncThunk('AllJobSlice/getAlljobs',
         });
       return response.data;
     } catch (error) {
-      thunkAPI.rejectWithValue("Internal Server Error");
+      return thunkAPI.rejectWithValue(error.response.data.msg)
     }
   });
 
@@ -67,7 +72,7 @@ const AllJobSlice = createSlice({
     },
     [getAllJobs.rejected]: (state, { payload }) => {
       state.isLoading = false;
-      toast.error(payload);
+      toast.error(payload || "Internal Server Error");
     }
   }
 });

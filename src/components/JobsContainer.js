@@ -7,12 +7,12 @@ import Loading from "../components/Loading";
 
 export const JobsContainer = () => {
   const dispatch = useDispatch();
-  const { jobs , isLoading} = useSelector((store) => store.allJob);
+  const { jobs , isLoading,page,search,sort,searchStatus, searchType} = useSelector((store) => store.allJob);
+
   useEffect(() => {
     dispatch(getAllJobs());
-  }, []);
+  }, [search,page,sort,searchStatus,searchType]);
 
-  console.warn(jobs);
   if (isLoading) {
     return (
       <Wrapper>
