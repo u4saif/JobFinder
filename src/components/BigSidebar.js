@@ -1,7 +1,7 @@
 import Logo from '../components/Logo';
 import Wrapper from '../assets/wrappers/BigSidebar';
 import { useSelector } from 'react-redux';
-import links from '../utils/navlinks';
+
 import { NavLinks } from './NavLinks.js';
 
 export const BigSidebar = () => {
@@ -18,12 +18,7 @@ export const BigSidebar = () => {
           <header>
             <Logo />
           </header>
-          <div className='nav-links'>
-            {links.map((link) => {
-              return <NavLinks key={link.id}
-                path={link.path} id={link.id} icon={link.icon} text={link.text} />
-            })}
-          </div>
+               <NavLinks />
         </div>
       </div>
     </Wrapper>

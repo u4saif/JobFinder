@@ -1,17 +1,27 @@
 import { NavLink } from 'react-router-dom';
+import links from '../utils/navlinks';
 
-export const NavLinks = (props) => {
-    const { path, id, icon, text } = props;
+export const NavLinks = () => {
     return (
-        <NavLink
-            to={path}
-            key={id}
-            className={({ isActive }) =>
-                isActive ? 'nav-link active' : 'nav-link'
+        <div className='nav-links'>
+            {
+                links.map((link) => {
+                    const { text, path, id, icon } = link;
+                    return (
+                        <NavLink
+                            to={path}
+                            className={({ isActive }) => {
+                                return isActive ? 'nav-link active' : 'nav-link';
+                            }}
+                            key={id}
+                            end
+                        >
+                            <span className='icon'>{icon}</span>
+                            {text}
+                        </NavLink>
+                    );
+                })
             }
-        >
-            <span className='icon'>{icon}</span>
-            {text}
-        </NavLink>
-    )
+        </div>
+    );
 }
